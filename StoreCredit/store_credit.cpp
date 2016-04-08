@@ -16,7 +16,7 @@ pair<int, int> StoreCredit(const int credit, const vector<int> item_prices) {
 		for (int j = size - 1; j > i; j--) {
 			int first_item = item_prices[i], second_item = item_prices[j];
 			if ((first_item + second_item) == credit)
-				return pair<int, int>(i, j);
+				return pair<int, int>(i+1, j+1);
 		}
 	}
 	return pair<int, int>(-1, -1);

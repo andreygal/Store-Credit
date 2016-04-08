@@ -1,5 +1,5 @@
 #include <iostream>
-#include <sstream>
+#include <fstream>
 #include <utility>
 #include <vector>
 #include "insertion_sort.h"
@@ -7,21 +7,32 @@
 #include "store_credit.h"
 using namespace std; 
 
-int main(int argv, char* argc) {
-	int num_cases, i{ 0 };
-	cin >> num_cases; 
+int main(int argc, char** argv) {
+
+	ifstream infile(argv[1]);
+	if (!infile) {
+		cout << "could not open " << argv[1] << endl;
+		exit(EXIT_FAILURE);
+	}
+	ofstream outfile(argv[2]);
+	if (!outfile) {
+		cout << "could not open " << argv[2] << endl;
+		exit(EXIT_FAILURE);
+	}
+
+	int num_cases, i{ 0 }, price, credit, num_items;
+	infile >> num_cases; 
 	while (i < num_cases) {
-		int k, credit; 
-		cin >> credit;
-		string line;
-		getline(cin, line);
-		istringstream iss; 
+		infile >> credit;
+		infile >> num_items;
 		vector<int> items; 
-		while (iss >> k) {
-			items.emplace_back(k);
+		for (int j = 0; j < num_items; j++) {
+			infile >> price; 
+			items.emplace_back(price);
 		}
 		pair<int, int> result = StoreCredit(credit, items);
-		cout << "Case #" << i + 1 << ": " << result.first << " " << result.second << endl; 
+		outfile << "Case #" << i + 1 << ": " << result.first << " " << result.second << endl; 
+		i++; 
 	}
 
 	system("pause");
